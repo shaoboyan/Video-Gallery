@@ -20,7 +20,20 @@
 
       <a-videosphere src="#video" rotation="0 180 0"></a-videosphere>
 
-      <a-entity video-controls="src:#video"></a-entity>
+      <a-entity id="video-entity" video-controls="src:#video"></a-entity>
     </a-scene>
+
+    <script type="text/javascript">
+      var entity = document.querySelector('#video-entity');
+      entity.setAttribute('visible', false);
+
+      var vid = document.getElementById("video");
+      vid.onpause = function() {
+        entity.setAttribute('visible', true);
+      }
+      vid.onplay = function() {
+        entity.setAttribute('visible', false);
+      }
+    </script>
   </body>
 </html>
