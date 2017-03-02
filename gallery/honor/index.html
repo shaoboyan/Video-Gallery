@@ -15,9 +15,29 @@
       </a-assets>
 
       <a-camera>
-          <a-cursor id="cursor" color="yellow"></a-cursor>
+          <a-cursor id="cursor" timeout="300" fuse="true" color="yellow"></a-cursor>
       </a-camera>
-
+	  <a-box id="back" position="3 1 -10" width="0.5" depth="0.5" height="0.5" visible="true">
+            <a-animation attribute="rotation" dur="10000" fill="forwards" to="0 360 0" repeat="indefinite"></a-animation>
+            <script type="text/javascript">
+                function loadUrl(newLocation)
+                {
+                    window.location = newLocation;
+                    return false;
+                }
+                document.querySelector("#back").addEventListener('click', function() {
+                    loadUrl("../../index.html");
+                });
+                document.querySelector('#back').addEventListener('mouseenter', function() {
+                    var des = document.querySelector('#back');
+                    des.setAttribute("scale", "1.5 1.5 1.5");
+                });
+                document.querySelector("#back").addEventListener('mouseleave', function() {
+                    var des = document.querySelector('#back');
+                    des.setAttribute("scale", "1 1 1");
+                });
+            </script>
+        </a-box>
       <a-videosphere src="#video" rotation="0 180 0"></a-videosphere>
 
       <a-entity id="video-entity" video-controls="src:#video"></a-entity>
@@ -26,7 +46,7 @@
     <script type="text/javascript">
       var entity = document.querySelector('#video-entity');
       entity.setAttribute('visible', false);
-
+	  
       var vid = document.getElementById("video");
       vid.onpause = function() {
         entity.setAttribute('visible', true);
