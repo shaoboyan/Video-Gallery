@@ -1,39 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<title>VR view</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <link rel="stylesheet" href="style.css">
-	</head>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>360 Video</title>
+    <meta name="description" content="360 Video — A-Frame">
+    <script src="../../js/aframe-master.js"></script>
+    <script src="../../js/aframe-video-controls.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <video id="video" src="./honor.mp4"
+               autoplay loop crossorigin></video>
+      </a-assets>
 
-	<body>
-    <div id="error" class="dialog">
-      <div class="wrap">
-        <h1 class="title">Error</h1>
-        <p class="message">An unknown error occurred.</p>
-      </div>
-    </div>
+      <a-camera>
+          <a-cursor id="cursor" timeout="300" fuse="true" color="yellow"></a-cursor>
+      </a-camera>
+	  <a-box id="back" position="3 1 -10" width="0.5" depth="0.5" height="0.5" visible="true">
+            <a-animation attribute="rotation" dur="10000" fill="forwards" to="0 360 0" repeat="indefinite"></a-animation>
+            <script type="text/javascript">
+                function loadUrl(newLocation)
+                {
+                    window.location = newLocation;
+                    return false;
+                }
+                document.querySelector("#back").addEventListener('click', function() {
+                    loadUrl("../../index.html");
+                });
+                document.querySelector('#back').addEventListener('mouseenter', function() {
+                    var des = document.querySelector('#back');
+                    des.setAttribute("scale", "1.5 1.5 1.5");
+                });
+                document.querySelector("#back").addEventListener('mouseleave', function() {
+                    var des = document.querySelector('#back');
+                    des.setAttribute("scale", "1 1 1");
+                });
+            </script>
+        </a-box>
+      <a-videosphere src="#video" rotation="0 180 0"></a-videosphere>
 
-    <div id="play-overlay">
-      <img src="images/ic_play_arrow_white_24dp.svg"/>
-    </div>
+      <a-entity id="video-entity" video-controls="src:#video"></a-entity>
+    </a-scene>
 
-    <a id="watermark" href="http://g.co/vr/view" target="_blank">
-      <img src="images/ic_info_outline_black_24dp.svg"/>
-    </a>
-
-    <script>
-WebVRConfig = {
-  BUFFER_SCALE: 0.5,
-  TOUCH_PANNER_DISABLED: false
-};
+    <script type="text/javascript">
+      var entity = document.querySelector('#video-entity');
+      entity.setAttribute('visible', false);
+	  
+      var vid = document.getElementById("video");
+      vid.onpause = function() {
+        entity.setAttribute('visible', true);
+      }
+      vid.onplay = function() {
+        entity.setAttribute('visible', false);
+      }
     </script>
-
-    <script src="build/three.js"></script>
-    <script src="build/embed.js"></script>
-	</body>
+  </body>
 </html>
