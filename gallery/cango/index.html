@@ -45,14 +45,18 @@
 
     <script type="text/javascript">
       var entity = document.querySelector('#video-entity');
+	  var back = document.querySelector('#back');
       entity.setAttribute('visible', false);
+	  back.setAttribute('visible', false);
 	  
       var vid = document.getElementById("video");
       vid.onpause = function() {
         entity.setAttribute('visible', true);
+		back.setAttribute('visible', true);
       }
       vid.onplay = function() {
         entity.setAttribute('visible', false);
+		back.setAttribute('visible', false);
       }
     </script>
   </body>
