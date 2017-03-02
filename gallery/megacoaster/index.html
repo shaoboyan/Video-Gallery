@@ -40,12 +40,12 @@
         </a-box>
       <a-videosphere src="#video" rotation="0 180 0"></a-videosphere>
 
-      <a-entity video-controls="src:#video"></a-entity>
+      <a-entity id="video-entity" video-controls="src:#video"></a-entity>
 	  
     </a-scene>
 	    <script type="text/javascript">
       var entity = document.querySelector('#video-entity');
-      entity.setAttribute('visible', false);
+      setTimeout("entity.setAttribute('visible', false)", 5000);
 	  
       var vid = document.getElementById("video");
       vid.onpause = function() {
