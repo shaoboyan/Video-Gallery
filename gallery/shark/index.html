@@ -46,7 +46,6 @@
 
     <script type="text/javascript">
       var entity = document.querySelector('#video-entity');
-      entity.setAttribute('visible', false);
 
       var vid = document.getElementById("video");
       vid.onpause = function() {
@@ -54,6 +53,7 @@
       }
       vid.onplay = function() {
         entity.setAttribute('visible', false);
+        setTimeout("entity.setAttribute('visible', false)", 5000);
       }
     </script>
   </body>
